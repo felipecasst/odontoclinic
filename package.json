@@ -1,0 +1,78 @@
+{
+  "name": "odontoclinic",
+  "productName": "OdontoClinic",
+  "version": "1.0.0",
+  "description": "Sistema de gestão para consultório odontológico",
+  "author": "OdontoClinic",
+  "private": true,
+  "main": "electron/main.cjs",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "build": "tsc --noEmit && vite build",
+    "start": "npm run build && electron .",
+    "test": "node --test tests/domain.test.ts tests/db.smoke.test.cjs",
+    "test:e2e": "npm run build && node tests/ui.e2e.mjs",
+    "dist:win": "npm run build && electron-builder --win --x64"
+  },
+  "dependencies": {
+    "node-sqlite3-wasm": "^0.8.61",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "zustand": "4.5.5"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.1",
+    "@vitejs/plugin-react": "4.3.4",
+    "electron": "33.2.1",
+    "electron-builder": "25.1.8",
+    "playwright-core": "1.48.2",
+    "typescript": "5.6.3",
+    "vite": "5.4.11"
+  },
+  "build": {
+    "appId": "com.odontoclinic.app",
+    "productName": "OdontoClinic",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "dist/**",
+      "electron/**",
+      "build/icon.*",
+      "package.json",
+      "node_modules/node-sqlite3-wasm/**"
+    ],
+    "asarUnpack": [
+      "node_modules/node-sqlite3-wasm/**"
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "zip"
+      ],
+      "icon": "build/icon.ico",
+      "signAndEditExecutable": true
+    },
+    "linux": {
+      "target": [
+        "dir"
+      ],
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "OdontoClinic",
+      "perMachine": false
+    },
+    "publish": null
+  },
+  "allowScripts": {
+    "better-sqlite3@12.4.1": true,
+    "electron@33.2.1": true,
+    "esbuild@0.21.5": true
+  }
+}
